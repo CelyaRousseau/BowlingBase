@@ -1,4 +1,4 @@
-package com.bowling.entity;
+package entity;
 
 import com.bowling.dao.PlayerDAO;
 import org.junit.Test;

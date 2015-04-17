@@ -1,6 +1,7 @@
-package com.bowling.entity;
+package entity;
 
 import com.bowling.dao.*;
+import com.bowling.entity.*;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -13,7 +14,7 @@ public class ScoreTest {
     @Test
     public void insertScores() {
 
-       Player player1 = new Player("Bob", "Lennon");
+        Player player1 = new Player("Bob", "Lennon");
         Player player2 = new Player("Jack", "Sparrow");
 
         new PlayerDAO().save(player1);

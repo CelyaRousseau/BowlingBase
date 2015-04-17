@@ -1,4 +1,4 @@
-package com.bowling.entity;
+package entity;
 
 /**
  * Created by Akronys on 21/02/2015.
@@ -12,7 +12,7 @@ public class LaneTest {
 
     @Test
     public void testConnection() {
-       /* Session session = UtilHibernate.getSessionFactory().getCurrentSession();
-        session.close();*/
+        Session session = UtilHibernate.getSessionFactory().getCurrentSession();
+        session.close();
     }
 }

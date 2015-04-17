@@ -6,9 +6,7 @@ package com.bowling.dao;
 
 import com.bowling.entity.User;
 import com.bowling.util.Template;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +19,8 @@ public class UserDAO extends Template {
         session.beginTransaction();
 
         User user = (User) session.load(User.class, user_id);
+
+        session.close();
 
         return user;
     }

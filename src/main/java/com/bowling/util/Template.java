@@ -12,6 +12,7 @@ public class Template {
         session.beginTransaction();
         Serializable seri = session.save(object);
         session.getTransaction().commit();
+        session.close();
 
         return seri;
     }
@@ -21,6 +22,7 @@ public class Template {
         session.beginTransaction();
         session.update(object);
         session.getTransaction().commit();
+        session.close();
 
     }
 
@@ -29,6 +31,7 @@ public class Template {
         session.beginTransaction();
         session.delete(object);
         session.getTransaction().commit();
+        session.close();
     }
 
     public <T> T get(Class<T> clazz, Serializable serializable) {
@@ -36,6 +39,7 @@ public class Template {
         session.beginTransaction();
         T object = (T) session.get(clazz, serializable);
         session.getTransaction().commit();
+        session.close();
 
         return object;
     }
