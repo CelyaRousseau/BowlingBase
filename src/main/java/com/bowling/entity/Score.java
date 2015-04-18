@@ -27,6 +27,9 @@ public class Score implements Serializable {
     private int secondRoll;
 
     @Column
+    private int thirdRoll;
+
+    @Column
     private  int RoundPoints;
 
     @JsonBackReference
@@ -99,5 +102,13 @@ public class Score implements Serializable {
 
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    public int getThirdRoll() {
+        return thirdRoll;
+    }
+
+    public void setThirdRoll(int thirdRoll) {
+        this.thirdRoll = thirdRoll;
     }
 }
