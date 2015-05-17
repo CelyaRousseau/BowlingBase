@@ -1,6 +1,8 @@
 package com.bowling.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,7 +22,6 @@ public class Game implements Serializable{
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, targetEntity = Score.class)
-    @JoinColumn(name = "game_id")
     private List<Score> scores;
 
     @OneToOne(fetch = FetchType.EAGER, targetEntity = Lane.class)
@@ -68,5 +69,9 @@ public class Game implements Serializable{
 
     public void setScores(List<Score> scores) {
         this.scores = scores;
+    }
+
+    public Lane getLane() {
+        return lane;
     }
 }

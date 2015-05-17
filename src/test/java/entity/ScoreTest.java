@@ -16,15 +16,17 @@ public class ScoreTest {
 
         Player player1 = new Player("Bob", "Lennon");
         Player player2 = new Player("Jack", "Sparrow");
+        Player player3 = new Player("blop", "Blop");
 
         new PlayerDAO().save(player1);
         new PlayerDAO().save(player2);
+        new PlayerDAO().save(player3);
 
         Lane lane1 = new Lane("piste_1", true);
         Game game = new Game(10, lane1);
 
         Reservation res = new Reservation();
-        res.setPlayers(Arrays.asList(new Player[]{player1}));
+        res.setPlayers(Arrays.asList(new Player[]{player1, player2, player3}));
         res.setGames(Arrays.asList(new Game[]{game}));
 
         Score score1 = new Score(1, player1, game);
@@ -35,7 +37,7 @@ public class ScoreTest {
         new LaneDAO().save(lane1);
         new GameDAO().save(game);
         new ReservationDAO().save(res);
-        new ScoreDAO().save(score1);
+      //  new ScoreDAO().save(score1);
 
     }
 

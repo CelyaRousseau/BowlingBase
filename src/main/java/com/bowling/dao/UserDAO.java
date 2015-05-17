@@ -6,9 +6,10 @@ package com.bowling.dao;
 
 import com.bowling.entity.User;
 import com.bowling.util.Template;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO extends Template {
@@ -18,7 +19,12 @@ public class UserDAO extends Template {
         Session session = getSessionFactory().openSession();
         session.beginTransaction();
 
-        User user = (User) session.load(User.class, user_id);
+        Criteria criteria = session.createCriteria(User.class)
+                .add(Restrictions.eq("user.id", user_id));
+
+        criteria.setMaxResults(1);
+
+        User user = (User)criteria.uniqueResult();
 
         session.close();
 
@@ -26,12 +32,13 @@ public class UserDAO extends Template {
     }
 
     public List<User> getAll() {
-        List<User> users = new ArrayList<User>();
 
         Session session = getSessionFactory().openSession();
         session.beginTransaction();
 
-        users = session.createCriteria(User.class).list();
+        Criteria criteria = session.createCriteria(User.class);
+
+        List<User> users = (List<User>)criteria.list();
 
         session.close();
 

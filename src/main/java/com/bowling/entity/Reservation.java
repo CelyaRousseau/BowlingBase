@@ -4,6 +4,9 @@ package com.bowling.entity;
  * Created by Akronys on 21/02/2015.
  */
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -18,24 +21,72 @@ public class Reservation implements Serializable {
     @GeneratedValue
     private int id;
 
-    @OneToMany(fetch = FetchType.EAGER, targetEntity = Game.class)
-    @JoinColumn(name = "reservation_id")
+    @Column
+    private String nameReservation;
+
+    public String getNameReservation() {
+        return nameReservation;
+    }
+
+    public void setNameReservation(String nameReservation) {
+        this.nameReservation = nameReservation;
+    }
+
+    public int getCountPlayer() {
+        return countPlayer;
+    }
+
+    public void setCountPlayer(int countPlayer) {
+        this.countPlayer = countPlayer;
+    }
+
+    public int getCountGame() {
+        return countGame;
+    }
+
+    public void setCountGame(int countGame) {
+        this.countGame = countGame;
+    }
+
+    @Column
+    private int countPlayer;
+
+    @Column
+    private int countGame;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(targetEntity = Game.class)
     private List<Game> games;
 
-    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Player.class)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(targetEntity = Player.class)
     private List<Player> players;
 
-    @Column
+    @Column(columnDefinition="DATETIME")
     private Date startReservation;
 
-    @Column
-    private Date endReservation;
+    @Column(columnDefinition="DATETIME")
+    private Date  endReservation;
 
     public Reservation(){}
 
-    public Reservation(Date startReservation, List<Game> games, List<Player> players) {
+    public Reservation(String nameReservation, int countGame, int countPlayer) {
+        this.nameReservation = nameReservation;
+        this.countGame = countGame;
+        this.countPlayer = countPlayer;
+    }
+
+    public Reservation(Date startReservation, String nameReservation, int countGame, int countPlayer) {
         this.startReservation = startReservation;
-        this.games = games;
+        this.nameReservation = nameReservation;
+        this.countGame = countGame;
+        this.countPlayer = countPlayer;
+    }
+
+
+    private int calculatePlayingTime(){
+        int averageTimeByPlayerByGame = 510; // En secondes
+        return this.countPlayer * averageTimeByPlayerByGame * this.countGame;
     }
 
     public int getId() {
@@ -56,13 +107,17 @@ public class Reservation implements Serializable {
 
     public void setStartReservation(Date startReservation) {
         this.startReservation = startReservation;
+        setEndReservation();
     }
 
     public Date getEndReservation() {
         return endReservation;
     }
 
-    public void setEndReservation(Date endReservation) {
+    public void setEndReservation() {
+        /* TODO : Calculate endRservation from startReservation  */
+        int duration = calculatePlayingTime();
+
         this.endReservation = endReservation;
     }
 

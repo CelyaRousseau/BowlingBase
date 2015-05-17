@@ -6,9 +6,10 @@ package com.bowling.dao;
 
 import com.bowling.entity.Reservation;
 import com.bowling.util.Template;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReservationDAO extends Template {
@@ -18,7 +19,12 @@ public class ReservationDAO extends Template {
         Session session = getSessionFactory().openSession();
         session.beginTransaction();
 
-        Reservation reservation = (Reservation) session.load(Reservation.class, reservation_id);
+        Criteria criteria = session.createCriteria(Reservation.class)
+                .add(Restrictions.eq("id", reservation_id));
+
+        criteria.setMaxResults(1);
+
+        Reservation reservation = (Reservation) criteria.uniqueResult();
 
         session.close();
 
@@ -26,15 +32,16 @@ public class ReservationDAO extends Template {
     }
 
     public List<Reservation> getAll() {
-        List<Reservation> bookings = new ArrayList<Reservation>();
 
         Session session = getSessionFactory().openSession();
         session.beginTransaction();
 
-        bookings = session.createCriteria(Reservation.class).list();
+        Criteria criteria = session.createCriteria(Reservation.class);
+
+        List<Reservation> reservations = (List<Reservation>)criteria.list();
 
         session.close();
 
-        return bookings;
+        return reservations;
     }
 }

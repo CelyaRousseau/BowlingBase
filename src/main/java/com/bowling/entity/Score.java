@@ -36,7 +36,6 @@ public class Score implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Player.class)
     private Player player;
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = Game.class)
     private Game game;
 
@@ -104,11 +103,11 @@ public class Score implements Serializable {
         this.game = game;
     }
 
-    public int getThirdRoll() {
-        return thirdRoll;
-    }
-
     public void setThirdRoll(int thirdRoll) {
         this.thirdRoll = thirdRoll;
+    }
+
+    public int getThirdRoll() {
+        return thirdRoll;
     }
 }

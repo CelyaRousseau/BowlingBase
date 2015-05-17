@@ -8,7 +8,6 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name="user")
 @DiscriminatorValue(value = "EMPLOYEE")
 public class Employee extends User implements Serializable{
 

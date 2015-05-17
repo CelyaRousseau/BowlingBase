@@ -1,6 +1,8 @@
 package com.bowling.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +13,6 @@ import java.util.List;
  */
 
 @Entity
-@Table(name="user")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(
         name="role",
@@ -34,6 +35,15 @@ public class Player extends User implements Serializable {
 
         public Player(String firstName, String lastName) {
                 super(firstName, lastName);
+        }
+
+
+        public List<Score> getScores() {
+            return scores;
+        }
+
+        public void setScores(List<Score> scores) {
+            this.scores = scores;
         }
 
         public String getNickName() {
